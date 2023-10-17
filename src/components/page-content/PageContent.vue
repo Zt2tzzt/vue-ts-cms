@@ -24,6 +24,7 @@ const permission = {
 // 页面数据
 const systemStore = useSystemStore()
 const { pageList, pageTotalCount } = storeToRefs(systemStore)
+console.log('pageTotalCount:', pageTotalCount.value, typeof pageTotalCount.value)
 
 // 分页参数
 const currentPage = ref(1)
@@ -46,6 +47,7 @@ const fetchPageListData: FetchPageListDataType = (formatData = {}) => {
   })
 }
 fetchPageListData()
+console.log('pageTotalCount:', pageTotalCount.value, typeof pageTotalCount.value)
 
 // 分页器
 const onSizeChange = () => {

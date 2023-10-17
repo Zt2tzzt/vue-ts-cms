@@ -21,29 +21,11 @@ const handleExitClick = () => {
 
 <template>
   <div class="user-state">
-    <!-- 1.状态小图标 -->
-    <!-- <div class="operation">
-      <span>
-        <el-icon><Message /></el-icon>
-      </span>
-      <span>
-        <span class="dot"></span>
-        <el-icon><ChatDotRound /></el-icon>
-      </span>
-      <span>
-        <span class="dot"></span>
-        <el-icon><Bell /></el-icon>
-      </span>
-    </div> -->
-
     <!-- 2.个人信息 -->
     <div class="info">
       <el-dropdown>
         <span class="user-info">
-          <el-avatar
-            :size="30"
-            src="https://portrait.gitee.com/uploads/avatars/user/1772/5318354_Zt2tzzt_1645413218.png"
-          />
+          <el-avatar :size="30" src="" />
           <span class="name">{{ nickname }}</span>
         </span>
         <template #dropdown>
