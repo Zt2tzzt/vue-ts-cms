@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-import'
+// import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-import'
 
 import vue from '@vitejs/plugin-vue'
 
@@ -21,8 +21,8 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()],
       dts: path.resolve(pathSrc, 'components.d.ts')
-    }),
-    createStyleImportPlugin({
+    })
+    /* createStyleImportPlugin({
       resolves: [ElementPlusResolve()],
       libs: [
         {
@@ -33,7 +33,7 @@ export default defineConfig({
           }
         }
       ]
-    })
+    }) */
   ],
   resolve: {
     alias: {

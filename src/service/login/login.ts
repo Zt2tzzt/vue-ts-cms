@@ -1,8 +1,9 @@
 import type { IAccount, ILoginResData, IUserInfoResData, IMenuInRole, IResponse } from '@/types'
-import ztRequest, { ltpBiRequest } from '..'
+import ztRequest from '..'
+// import { ltpBiRequest } from '..'
 
 export const accountLoginRequest = (account: IAccount) =>
-  ltpBiRequest.post<IResponse<ILoginResData>>({
+  ztRequest.post<IResponse<ILoginResData>>({
     url: 'login',
     data: account
   })
