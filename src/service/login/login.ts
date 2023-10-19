@@ -4,7 +4,7 @@ import ztRequest from '..'
 
 export const accountLoginRequest = (account: IAccount) =>
   ztRequest.post<IResponse<ILoginResData>>({
-    url: 'login',
+    url: '/login',
     data: account
   })
 
