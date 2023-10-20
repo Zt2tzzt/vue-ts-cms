@@ -42,7 +42,6 @@ const useLoginStore = defineStore('login', {
         this.userId = res.data.id
         localCache.setCache(LOGIN_TOKEN, this.token)
         localCache.setCache(USER_ID, this.userId)
-        // return getUserInfoById(res.data.id)
         this.getUserInfoAndMenus(res.data.id)
       })
     },

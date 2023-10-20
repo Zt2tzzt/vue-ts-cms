@@ -10,6 +10,7 @@ declare module 'vue' {
     BarEchart: typeof import('./components/page-echarts/src/BarEchart.vue')['default']
     BaseEchart: typeof import('./components/page-echarts/src/BaseEchart.vue')['default']
     BreadCrumb: typeof import('./components/main-header/cpns/BreadCrumb.vue')['default']
+    ElAlert: typeof import('element-plus/es')['ElAlert']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']

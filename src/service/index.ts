@@ -30,7 +30,7 @@ const ztRequest = new ZTRequest({
   }
 })
 
-export const ltpBiRequest = new ZTRequest({
+const ltpBiRequest = new ZTRequest({
   // baseURL: 'http://localhost:8000/api',
   baseURL: '/api',
   timeout: TIME_OUT,
@@ -58,4 +58,4 @@ export const ltpBiRequest = new ZTRequest({
   }
 })
 
-export default ztRequest
+export default ltpBiRequest

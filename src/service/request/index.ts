@@ -8,6 +8,9 @@ import type { AxiosInstance } from 'axios'
 import type { ZTInternalRequestInterceptor, ZTInternalRequestConfig, ZTRequestConfig } from './type'
 
 import { ElLoading } from 'element-plus'
+import 'element-plus/theme-chalk/el-loading.css'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
 import type { LoadingInstance } from 'element-plus/lib/components/loading/src/loading'
 
 const DEFAULT_LOADING = true
@@ -59,6 +62,13 @@ class ZTRequest {
         // console.log('全局拦截，响应成功')
         // 关闭 loading 动画
         this.loadingInstance?.close()
+        if (res.data.code < 0) {
+          ElMessage({
+            showClose: true,
+            message: res.data.msg,
+            type: 'error'
+          })
+        }
         const data = res.data
         return data
       },

@@ -54,10 +54,10 @@ const loginAction = (isRemPwd: boolean) => {
           }
         })
         .catch(() => {
-          ElMessage.error('Oops, 帐号或密码错误~~.')
+          console.log('账号或密码错误~')
         })
     } else {
-      ElMessage.error('Oops, 请您输入正确的格式后再操作~~.')
+      ElMessage.error('请您输入正确的格式后再操作~~.')
     }
   })
 }
