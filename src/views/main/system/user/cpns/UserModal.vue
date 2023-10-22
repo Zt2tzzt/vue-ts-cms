@@ -4,10 +4,34 @@ import type { IUserCreateFormData, IUser } from '@/types'
 import useMainStore from '@/stores/main/main'
 import useSystemStore from '@/stores/main/system/system'
 import { storeToRefs } from 'pinia'
+import type { FormRules, ElForm } from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 const showdialog = ref(false)
 const isAdd = ref(true) // 新建：true；修改：false
 const editId = ref(-1)
+
+// 校验规则
+const accountRules: FormRules = {
+  name: [
+    { required: true, message: '必须输入帐号信息~', trigger: 'blur' },
+    {
+      pattern: /^[a-z0-9]{3,50}$/,
+      message: '必须是3~50位数字或字母组成~',
+      trigger: 'blur'
+    }
+  ],
+  password: [
+    { required: true, message: '必须输入密码信息~', trigger: 'blur' },
+    {
+      pattern: /^[a-z0-9]{3,50}$/,
+      message: '必须是3-50位数字或字母组成',
+      trigger: 'blur'
+    }
+  ]
+}
+
+const formRef = ref<InstanceType<typeof ElForm>>()
 
 // 表单属性
 const formData = reactive<IUserCreateFormData>({
@@ -54,19 +78,25 @@ const { entireRoles, entireDepartments } = storeToRefs(mainStore)
 // 点击“确认”
 const systemStore = useSystemStore()
 const onConfigClick = () => {
-  if (!isAdd.value && editId.value !== -1) {
-    // 编辑
-    const { ...editFormData } = formData
-    delete editFormData.password
-    systemStore.pathEditUserByIdAction(editId.value, editFormData).then(res => {
-      if (res.code >= 0) showdialog.value = false
-    })
-  } else {
-    // 新增
-    systemStore.postNewUserAction({ ...formData }).then(res => {
-      if (res.code >= 0) showdialog.value = false
-    })
-  }
+  formRef.value?.validate(valid => {
+    if (valid) {
+      if (!isAdd.value && editId.value !== -1) {
+        // 编辑
+        const { ...editFormData } = formData
+        delete editFormData.password
+        systemStore.pathEditUserByIdAction(editId.value, editFormData).then(res => {
+          if (res.code >= 0) showdialog.value = false
+        })
+      } else {
+        // 新增
+        systemStore.postNewUserAction({ ...formData }).then(res => {
+          if (res.code >= 0) showdialog.value = false
+        })
+      }
+    } else {
+      ElMessage({ showClose: true, message: '请您输入正确的格式后再操作~~', type: 'error' })
+    }
+  })
 }
 
 defineExpose({
@@ -84,7 +114,13 @@ defineExpose({
       center
     >
       <div class="form">
-        <el-form :model="formData" label-width="80px" size="large">
+        <el-form
+          :model="formData"
+          :rules="accountRules"
+          label-width="80px"
+          size="large"
+          ref="formRef"
+        >
           <el-form-item label="用户名" prop="name">
             <el-input v-model="formData.name" placeholder="请输入用户名"></el-input>
           </el-form-item>

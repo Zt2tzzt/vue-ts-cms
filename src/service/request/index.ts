@@ -8,9 +8,7 @@ import type { AxiosInstance } from 'axios'
 import type { ZTInternalRequestInterceptor, ZTInternalRequestConfig, ZTRequestConfig } from './type'
 
 import { ElLoading } from 'element-plus'
-import 'element-plus/theme-chalk/el-loading.css'
 import { ElMessage } from 'element-plus'
-import 'element-plus/theme-chalk/el-message.css'
 import type { LoadingInstance } from 'element-plus/lib/components/loading/src/loading'
 
 const DEFAULT_LOADING = true
