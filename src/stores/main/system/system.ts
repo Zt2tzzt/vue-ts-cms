@@ -72,17 +72,19 @@ const useSystemStore = defineStore('system', {
     },
     postNewUserAction(addParam: IUserCreateFormData) {
       console.log('user addParam:', addParam)
-      postNewUser(addParam).then(res => {
+      return postNewUser(addParam).then(res => {
         console.log('user add res:', res)
         this.postUsersAction({ offset: 0, size: 10 })
+        return res
       })
     },
     pathEditUserByIdAction(id: number, editParam: IUserEditFormData) {
       console.log('user editParam:', editParam)
-      pathEditUserById(id, editParam).then(res => {
+      return pathEditUserById(id, editParam).then(res => {
         console.log('user edit res:', res)
         this.postUsersAction({ offset: 0, size: 10 })
         fetchUsersAndMenusData(USER, id)
+        return res
       })
     },
 

@@ -9,7 +9,6 @@ const registerStore = (app: App<Element>) => {
   app.use(pinia)
   // 2.加载本地数据
   const loginStore = useLoginStore()
-  console.log('hahaha')
   loginStore.loadLocalCacheAction()
 }
 

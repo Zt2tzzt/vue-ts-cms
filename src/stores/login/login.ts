@@ -70,7 +70,6 @@ const useLoginStore = defineStore('login', {
         })
     },
     loadLocalCacheAction() {
-      console.log('呵呵呵')
       // 页面载入、刷新，从缓存中加载数据
       const token = localCache.getCache(LOGIN_TOKEN)
       const userInfo = localCache.getCache(USER_INFO)

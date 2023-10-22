@@ -2,7 +2,7 @@
 import useSystemStore from '@/stores/main/system/system'
 import { storeToRefs } from 'pinia'
 import { formatUTC } from '@/utils/format'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import type { IUserSearchFormData, IUser } from '@/types'
 
 const emits = defineEmits(['newClick', 'editClick'])
@@ -12,6 +12,14 @@ const { users, usersTotalCount } = storeToRefs(systemStore)
 
 const pageSize = ref(10)
 const currentPage = ref(1)
+const deleteDialogVisible = ref(false)
+const deleteUserInfo = reactive<{
+  id: number
+  name: string
+}>({
+  id: -1,
+  name: ''
+})
 
 const fetchUserListData = (formatData: IUserSearchFormData | object = {}) => {
   // 1.获取 offset 和 limit
@@ -32,8 +40,15 @@ const onCurrentChange = () => {
   fetchUserListData()
 }
 
-const onDeleteClick = (id: number) => {
-  systemStore.deleteUserByIdAction(id)
+const onDeleteClick = (id: number, name: string) => {
+  deleteDialogVisible.value = true
+  deleteUserInfo.id = id
+  deleteUserInfo.name = name
+}
+
+const onConfirmDeleteClick = () => {
+  deleteDialogVisible.value = false
+  systemStore.deleteUserByIdAction(deleteUserInfo.id)
 }
 
 const onNewclick = () => {
@@ -97,7 +112,7 @@ defineExpose({
             icon="Delete"
             type="danger"
             text
-            @click="onDeleteClick(scope.row.id)"
+            @click="onDeleteClick(scope.row.id, scope.row.name)"
             >删除</el-button
           >
         </el-table-column>
@@ -116,6 +131,17 @@ defineExpose({
         @current-change="onCurrentChange"
       ></el-pagination>
     </div>
+
+    <!-- 删除提示对话框 -->
+    <el-dialog v-model="deleteDialogVisible" title="确定删除" width="30%" center>
+      <span>确定要删除“{{ deleteUserInfo.name }}”吗？</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="deleteDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="onConfirmDeleteClick"> 确认 </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 

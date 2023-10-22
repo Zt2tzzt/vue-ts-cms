@@ -15,6 +15,7 @@ const formData = reactive<IUserCreateFormData>({
   realname: '',
   password: '',
   cellphone: '',
+  enable: '',
   roleId: '',
   departmentId: ''
 })
@@ -28,6 +29,7 @@ type OpenDialogParamType = {
 const setModalVisible = ({ isNew = true, itemData }: OpenDialogParamType) => {
   showdialog.value = true
   isAdd.value = isNew
+
   if (!isNew && itemData) {
     // 编辑
     Object.keys({ ...formData }).forEach(key => {
@@ -52,15 +54,18 @@ const { entireRoles, entireDepartments } = storeToRefs(mainStore)
 // 点击“确认”
 const systemStore = useSystemStore()
 const onConfigClick = () => {
-  showdialog.value = false
   if (!isAdd.value && editId.value !== -1) {
     // 编辑
     const { ...editFormData } = formData
     delete editFormData.password
-    systemStore.pathEditUserByIdAction(editId.value, editFormData)
+    systemStore.pathEditUserByIdAction(editId.value, editFormData).then(res => {
+      if (res.code >= 0) showdialog.value = false
+    })
   } else {
     // 新增
-    systemStore.postNewUserAction({ ...formData })
+    systemStore.postNewUserAction({ ...formData }).then(res => {
+      if (res.code >= 0) showdialog.value = false
+    })
   }
 }
 
@@ -91,6 +96,12 @@ defineExpose({
           </el-form-item>
           <el-form-item label="手机号码" prop="cellphone">
             <el-input v-model="formData.cellphone" placeholder="请输入手机号码"></el-input>
+          </el-form-item>
+          <el-form-item label="用户状态" prop="enable">
+            <el-select v-model="formData.enable" placeholder="请选择状态" style="width: 100%">
+              <el-option label="启用" :value="1"></el-option>
+              <el-option label="禁用" :value="0"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="选择角色" prop="roleId">
             <el-select v-model="formData.roleId" placeholder="请选择角色" style="width: 100%">

@@ -21,13 +21,13 @@ export const deleteUserById = (id: number) =>
   })
 
 export const postNewUser = (addParam: IUserCreateFormData) =>
-  ztRequest.post({
+  ztRequest.post<IResponse>({
     url: '/users',
     data: addParam
   })
 
 export const pathEditUserById = (id: number, editParam: IUserEditFormData) =>
-  ztRequest.patch({
+  ztRequest.patch<IResponse>({
     url: '/users/' + id,
     data: editParam
   })

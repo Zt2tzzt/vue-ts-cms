@@ -23,7 +23,7 @@ export interface IResponseListData<T = any> {
   list: Array<T>
   totalCount: number
 }
-export interface IResponse<T> {
+export interface IResponse<T = any> {
   code: number
   data: T
 }
