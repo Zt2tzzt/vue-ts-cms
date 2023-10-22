@@ -15,3 +15,8 @@ export const postEntireMenus = () =>
   ztRequest.post<IResponse<IMenuResult>>({
     url: '/menu/list'
   })
+
+export const verfyAuth = () =>
+  ztRequest.get<IResponse>({
+    url: '/login/test-auth'
+  })

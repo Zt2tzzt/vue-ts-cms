@@ -1,5 +1,10 @@
 import { defineStore } from 'pinia'
-import { postEntireRoles, postEntireDepartment, postEntireMenus } from '@/service/main/main'
+import {
+  postEntireRoles,
+  postEntireDepartment,
+  postEntireMenus,
+  verfyAuth
+} from '@/service/main/main'
 import type { IRole, IMenu, IDepartment } from '@/types'
 
 interface IMainStore {
@@ -28,6 +33,9 @@ const useMainStore = defineStore('main', {
         console.log('entire menus res:', res)
         this.entireMenus = res.data.list
       })
+    },
+    verifyAuthAction() {
+      return verfyAuth()
     }
   }
 })
