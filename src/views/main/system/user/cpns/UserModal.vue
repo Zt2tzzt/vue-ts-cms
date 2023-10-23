@@ -44,13 +44,8 @@ const formData = reactive<IUserCreateFormData>({
   departmentId: ''
 })
 
-type OpenDialogParamType = {
-  isNew?: boolean
-  itemData?: IUser
-}
-
 // 设置 dialog 是否显示
-const setModalVisible = ({ isNew = true, itemData }: OpenDialogParamType) => {
+const setModalVisible = ({ isNew = true, itemData }: { isNew?: boolean; itemData?: IUser }) => {
   showdialog.value = true
   isAdd.value = isNew
 

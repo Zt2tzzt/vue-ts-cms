@@ -10,6 +10,7 @@ import type { ZTInternalRequestInterceptor, ZTInternalRequestConfig, ZTRequestCo
 import { ElLoading } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import type { LoadingInstance } from 'element-plus/lib/components/loading/src/loading'
+import router from '@/router'
 
 const DEFAULT_LOADING = true
 
@@ -66,6 +67,13 @@ class ZTRequest {
             message: res.data.msg,
             type: 'error'
           })
+
+          switch (res.data.code) {
+            case -1006:
+            case -1007:
+              router.push('/login')
+              break
+          }
         }
         const data = res.data
         return data

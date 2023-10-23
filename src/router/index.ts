@@ -2,7 +2,7 @@ import { localCache } from '@/utils/cache'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { LOGIN_TOKEN } from '@/global/constance'
 import { firstRoute } from '@/utils/map-menu'
-import useMainStore from '@/stores/main/main'
+// import useMainStore from '@/stores/main/main'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -33,9 +33,9 @@ router.beforeEach(async to => {
   if (to.path.startsWith('/main')) {
     if (!token) return '/login'
 
-    const mainStore = useMainStore()
-    const res = await mainStore.verifyAuthAction()
-    if (res.code < 0) return '/login'
+    // const mainStore = useMainStore()
+    // const res = await mainStore.verifyAuthAction()
+    // if (res.code < 0) return '/login'
 
     if (to.path === '/main') return firstRoute?.path
   }

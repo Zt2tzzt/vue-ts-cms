@@ -20,21 +20,23 @@ const isAdd = ref(true) // 新建：true；修改：false
 const editId = ref(-1)
 
 // 表单属性
-const initialFormData = props.modalConfig.formItems.reduce((accumulate, item) => {
-  if ('prop' in item) accumulate[item.prop] = ''
-  return accumulate
-}, {} as CreateFormDataType | EditFormDataType)
+const initialFormData = props.modalConfig.formItems.reduce(
+  (accumulate, item) => {
+    if ('prop' in item) accumulate[item.prop] = ''
+    return accumulate
+  },
+  {} as CreateFormDataType | EditFormDataType
+)
 const formData = reactive(initialFormData)
 
-interface OpenDialogParamType<T> {
-  isNew?: boolean
-  itemData?: T
-}
 // 设置 dialog 是否显示，并初始化数据。
 const setModalVisible = <T extends { id: number }, F>({
   isNew = true,
   itemData
-}: OpenDialogParamType<T>) => {
+}: {
+  isNew?: boolean
+  itemData?: T
+}) => {
   showdialog.value = true
   isAdd.value = isNew
   if (!isNew && itemData) {

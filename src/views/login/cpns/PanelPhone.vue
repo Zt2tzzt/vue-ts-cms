@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ElForm } from 'element-plus'
-import { reactive, ref, defineExpose } from 'vue'
+import { reactive, ref } from 'vue'
 
 const rules = {
   number: [
