@@ -44,14 +44,14 @@ const onQueryClick = () => {
             <el-form-item :label="item.label" :prop="item.prop">
               <template v-if="item.type === 'input'">
                 <el-input
-                  v-model="searchForm[item.prop]"
+                  v-model="searchForm[item.prop] as any"
                   :placeholder="item.placeholder"
                 ></el-input>
               </template>
 
               <template v-if="item.type === 'date-picker'">
                 <el-date-picker
-                  v-model="searchForm[item.prop]"
+                  v-model="searchForm[item.prop] as any"
                   type="daterange"
                   range-separator="-"
                   start-placeholder="开始时间"
