@@ -1,35 +1,45 @@
-<script setup lang="ts" name="user">
-import UserContent from './cpns/UserContent.vue'
-import UserSearch from './cpns/UserSearch.vue'
-import type { IUserSearchFormData, IUser } from '@/types'
-import { ref } from 'vue'
+<script setup lang="ts">
+import PageSearch from '@/components/page-search/PageSearch.vue'
+import PageContent from '@/components/page-content/PageContent.vue'
+import contentConfig from './config/content.config'
+import searchConfig from './config/search.config'
 import UserModal from './cpns/UserModal.vue'
+import usePageSearch from '@/hooks/usePageSearch'
+import usePageContent from '@/hooks/usePageContent'
+import type { IUser, HookFnType } from '@/types'
 
-const contentRef = ref<InstanceType<typeof UserContent>>()
-const handleQueryClick = (formData: IUserSearchFormData) => {
-  contentRef.value?.fetchUserListData(formData)
-}
-const handleResetClick = () => {
-  contentRef.value?.fetchUserListData()
-}
-
-const modalRef = ref<InstanceType<typeof UserModal>>()
-const handleNewClick = () => {
+// const modalRef = ref<InstanceType<typeof UserModal>>()
+/* const handleNewClick = () => {
   modalRef.value?.setModalVisible({ isNew: true })
 }
 const handleEditClick = (itemData: IUser) => {
   modalRef.value?.setModalVisible({ isNew: false, itemData })
-}
+} */
+
+const [contentRef, handleQueryClick, handleResetClick] = usePageSearch()
+const [modalRef, handleNewClick, handleEditClick] = usePageContent()
 </script>
 
 <template>
   <div class="user">
-    <UserSearch @query-click="handleQueryClick" @reset-click="handleResetClick"></UserSearch>
-    <UserContent
+    <PageSearch
+      :search-config="searchConfig"
+      @query-click="handleQueryClick as HookFnType"
+      @reset-click="handleResetClick as HookFnType"
+    ></PageSearch>
+    <PageContent
       ref="contentRef"
-      @new-click="handleNewClick"
-      @edit-click="handleEditClick"
-    ></UserContent>
+      :content-config="contentConfig"
+      @new-click="handleNewClick as HookFnType"
+      @edit-click="handleEditClick as HookFnType"
+    >
+      <template #row="row">
+        <el-button size="small" :type="(row as any).enable ? 'primary' : 'danger'">
+          {{ (row as any).enable ? '启用' : '禁用' }}
+        </el-button>
+      </template>
+    </PageContent>
+
     <UserModal ref="modalRef"></UserModal>
   </div>
 </template>

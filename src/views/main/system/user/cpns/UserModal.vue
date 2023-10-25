@@ -39,7 +39,7 @@ const formData = reactive<IUserCreateFormData>({
   realname: '',
   password: '',
   cellphone: '',
-  enable: '',
+  enable: '1',
   roleId: '',
   departmentId: ''
 })

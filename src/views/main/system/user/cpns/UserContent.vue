@@ -80,7 +80,7 @@ defineExpose({
         <el-table-column align="center" label="用户名" prop="name" width="200"></el-table-column>
         <el-table-column
           align="center"
-          label="真是姓名"
+          label="真实姓名"
           prop="realname"
           width="200"
         ></el-table-column>

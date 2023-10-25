@@ -1,4 +1,4 @@
-import { ISearchParam } from './global'
+import type { ISearchParam, ISearchFormItem } from './global'
 
 interface IUserFormDataBasic {
   name: string
@@ -24,6 +24,17 @@ export interface IUserSearchFormData extends IUserFormDataBasic {
 }
 
 type IUserSearchFormDataPartial = Partial<IUserSearchFormData>
+
+// SearchFormData
+export interface IUserSearchFormData {
+  name: string
+  realname: string
+  cellphone: string
+  enable: number
+  createAt: string | string[]
+}
+
+type IUserSearchFormItem = ISearchFormItem<IUserSearchFormData>
 
 export type IUserQueryParam = ISearchParam & IUserSearchFormDataPartial
 

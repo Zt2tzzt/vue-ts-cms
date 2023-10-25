@@ -161,6 +161,12 @@ defineExpose({
             </el-table-column>
           </template>
 
+          <template v-else-if="item.gener === 'custom'">
+            <el-table-column align="center" v-bind="item" #default="scope">
+              <slot :name="item.slotname" :row="scope.row"></slot>
+            </el-table-column>
+          </template>
+
           <!-- 较为通用的列 -->
           <template v-else>
             <el-table-column align="center" v-bind="item"></el-table-column>

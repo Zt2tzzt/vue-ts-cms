@@ -2,7 +2,7 @@
 import PageSearch from '@/components/page-search/PageSearch.vue'
 import searchConfig from './config/search.config'
 import PageContent from '@/components/page-content/PageContent.vue'
-import contentConfig from './config/contnt.config'
+import contentConfig from './config/content.config'
 import usePageContent from '@/hooks/usePageContent'
 import usePageSearch from '@/hooks/usePageSearch'
 import type { IRole, HookFnType } from '@/types'

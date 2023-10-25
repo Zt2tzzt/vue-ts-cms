@@ -16,7 +16,7 @@ const permission = {
 
 // 初始化表单
 const initialForm = props.searchConfig.formItems.reduce((accumulate, item) => {
-  accumulate[item.prop] = item.initialvalue as keyof SearchFormDataType
+  accumulate[item.prop] = item.initialvalue
   return accumulate
 }, {} as SearchFormDataType)
 const searchForm = reactive(initialForm)

@@ -11,6 +11,13 @@ import type {
   IRoleEditFormData,
   IRoleSearchFormItem
 } from './role'
+import type {
+  IUser,
+  IUserSearchFormData,
+  IUserSearchFormItem,
+  IUserCreateFormData,
+  IUserEditFormData
+} from './user'
 
 // 查询
 export interface ISearchParam {
@@ -29,11 +36,18 @@ export interface IResponse<T = any> {
 }
 
 // itemType, CreateFormDataType, EditFormDataType
-export type ItemType = IDepartment | IRole
-export type CreateFormDataType = IDepartmentCreateFormData & IRoleCreateFormData
-export type EditFormDataType = IDepartmentEditFormData & IRoleEditFormData
-export type SearchFormDataType = IDepartmentSearchFormData & IRoleSearchFormData
-export type SearchFormItemType = IRoleSearchFormItem | IDepartmentSearchFormItem
+export type ItemType = IUser | IDepartment | IRole
+export type CreateFormDataType = IUserCreateFormData &
+  IDepartmentCreateFormData &
+  IRoleCreateFormData
+export type EditFormDataType = IDepartmentEditFormData & IRoleEditFormData & IUserEditFormData
+export type SearchFormDataType = IUserSearchFormData &
+  IDepartmentSearchFormData &
+  IRoleSearchFormData
+export type SearchFormItemType =
+  | IRoleSearchFormItem
+  | IDepartmentSearchFormItem
+  | IUserSearchFormItem
 
 // PageSearch 配置文件
 export interface ISearchFormItem<T> {
@@ -58,6 +72,7 @@ export interface IContentProp {
   prop?: string
   type?: 'selection' | 'index'
   gener?: 'handler' | 'timer' | 'custom'
+  slotname?: string
 }
 
 export interface IContentConfig {
