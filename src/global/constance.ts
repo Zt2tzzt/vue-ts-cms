@@ -5,7 +5,7 @@ export const USER_INFO = 'login/userInfo'
 export const USER_MENU = 'login/userMenu'
 
 // api
-export const USER = 'user'
+export const USER = 'users'
 export const DEPARTMENT = 'department'
 export const ROLE = 'role'
 export const MENU = 'menu'

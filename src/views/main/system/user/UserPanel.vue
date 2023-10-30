@@ -6,7 +6,7 @@ import searchConfig from './config/search.config'
 import UserModal from './cpns/UserModal.vue'
 import usePageSearch from '@/hooks/usePageSearch'
 import usePageContent from '@/hooks/usePageContent'
-import type { IUser, HookFnType } from '@/types'
+import type { HookFnType } from '@/types'
 
 // const modalRef = ref<InstanceType<typeof UserModal>>()
 /* const handleNewClick = () => {
@@ -27,15 +27,16 @@ const [modalRef, handleNewClick, handleEditClick] = usePageContent()
       @query-click="handleQueryClick as HookFnType"
       @reset-click="handleResetClick as HookFnType"
     ></PageSearch>
+
     <PageContent
       ref="contentRef"
       :content-config="contentConfig"
       @new-click="handleNewClick as HookFnType"
       @edit-click="handleEditClick as HookFnType"
     >
-      <template #row="row">
-        <el-button size="small" :type="(row as any).enable ? 'primary' : 'danger'">
-          {{ (row as any).enable ? '启用' : '禁用' }}
+      <template #state="props">
+        <el-button size="small" :type="props.row.enable ? 'primary' : 'danger'">
+          {{ props.row.enable ? '启用' : '禁用' }}
         </el-button>
       </template>
     </PageContent>

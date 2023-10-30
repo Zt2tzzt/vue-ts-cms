@@ -1,8 +1,8 @@
-import { ROLE } from '@/global/constance'
+import { USER } from '@/global/constance'
 import type { IContentConfig } from '@/types'
 
 const contentConfig: IContentConfig = {
-  pageName: ROLE,
+  pageName: USER,
   header: {
     title: '用户列表',
     btnLabel: '新建用户'
