@@ -1,16 +1,5 @@
-import type {
-  IUserQueryParam,
-  IUser,
-  IUserCreateFormData,
-  IUserEditFormData,
-  IResponseListData,
-  ItemType
-} from '@/types'
+import type { IUser, IResponseListData, ItemType } from '@/types'
 import {
-  postUsers,
-  deleteUserById,
-  postNewUser,
-  pathEditUserById,
   postPageList,
   deletePageById,
   postNewPageRecord,
@@ -55,30 +44,32 @@ const useSystemStore = defineStore('system', {
   }),
   actions: {
     // User
-    postUsersAction(queryParam: IUserQueryParam) {
+    /* postUsersAction(queryParam: IUserQueryParam) {
       console.log('user query param:', queryParam)
       postUsers(queryParam).then(res => {
         console.log('users res:', res)
         this.users = res.data.list
         this.usersTotalCount = res.data.totalCount
       })
-    },
-    deleteUserByIdAction(id: number) {
+    }, */
+    /* deleteUserByIdAction(id: number) {
       deleteUserById(id).then(res => {
         console.log('user detete res:', res)
         this.postUsersAction({ offset: 0, size: 10 })
         fetchUsersAndMenusData(USER, id)
       })
-    },
-    postNewUserAction(addParam: IUserCreateFormData) {
+    }, */
+    // 新增用户
+    /* postNewUserAction(addParam: IUserCreateFormData) {
       console.log('user addParam:', addParam)
       return postNewUser(addParam).then(res => {
         console.log('user add res:', res)
         this.postUsersAction({ offset: 0, size: 10 })
         return res
       })
-    },
-    pathEditUserByIdAction(id: number, editParam: IUserEditFormData) {
+    }, */
+    // 修改用户
+    /* pathEditUserByIdAction(id: number, editParam: IUserEditFormData) {
       console.log('user editParam:', editParam)
       return pathEditUserById(id, editParam).then(res => {
         console.log('user edit res:', res)
@@ -86,44 +77,52 @@ const useSystemStore = defineStore('system', {
         fetchUsersAndMenusData(USER, id)
         return res
       })
-    },
+    }, */
 
     // 通用的封装
     postPageListAction<T>(pageName: string, queryParam: T) {
       console.log(pageName, 'queryParam:', queryParam)
       postPageList<T, IResponseListData>(pageName, queryParam).then(res => {
-        console.log(pageName, 'res:', res)
+        console.log('pageName:', pageName, 'res:', res)
         this.pageList = res.data.list
         this.pageTotalCount = res.data.totalCount || 0
       })
     },
     deletePageByIdAction(pageName: string, id: number) {
       deletePageById(pageName, id).then(res => {
-        console.log(pageName, 'delete res:', res)
+        console.log('pageName:', pageName, 'delete res:', res)
         this.postPageListAction(pageName, { offset: 0, size: 10 })
 
         // 如果是部门，角色，菜单等基础数据发生增、删、改操作，要重新加载到缓存中。
-        fetchEntireData(pageName)
+        if ([DEPARTMENT, ROLE, MENU].includes(pageName)) {
+          fetchEntireData(pageName)
+        }
         fetchUsersAndMenusData(pageName, id)
       })
     },
     postNewPageRecordAction<T>(pageName: string, record: T) {
-      postNewPageRecord(pageName, record).then(res => {
-        console.log(pageName, 'add res:', res)
+      return postNewPageRecord(pageName, record).then(res => {
+        console.log('pageName:', pageName, 'add res:', res)
         this.postPageListAction(pageName, { offset: 0, size: 10 })
 
         // 如果是部门，角色，菜单等基础数据发生增、删、改操作，要重新加载到缓存中。
-        fetchEntireData(pageName)
+        if ([DEPARTMENT, ROLE, MENU].includes(pageName)) {
+          fetchEntireData(pageName)
+        }
+        return res
       })
     },
     pathEditPageRecordByIdAction<T>(pageName: string, id: number, record: T) {
-      pathEditPageRecordById(pageName, id, record).then(res => {
-        console.log(pageName, 'edit res:', res)
+      return pathEditPageRecordById(pageName, id, record).then(res => {
+        console.log('pageName:', pageName, 'edit res:', res)
         this.postPageListAction(pageName, { offset: 0, size: 10 })
 
         // 如果是部门，角色，菜单等基础数据发生增、删、改操作，要重新加载到缓存中。
-        fetchEntireData(pageName)
+        if ([DEPARTMENT, ROLE, MENU].includes(pageName)) {
+          fetchEntireData(pageName)
+        }
         fetchUsersAndMenusData(pageName, id)
+        return res
       })
     }
   }

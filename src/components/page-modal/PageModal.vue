@@ -8,16 +8,20 @@ import type {
   IModalFormItemGeneral,
   IModalFormItemCustom
 } from '@/types'
+import type { FormRules, ElForm } from 'element-plus'
 
 const props = defineProps<{
   modalConfig: IModalConfig
   otherInfo?: object
+  rules?: FormRules
 }>()
 const pageName = computed(() => props.modalConfig.pageName)
 
 const showdialog = ref(false)
 const isAdd = ref(true) // 新建：true；修改：false
 const editId = ref(-1)
+
+const formRef = ref<InstanceType<typeof ElForm>>()
 
 // 表单属性
 const initialFormData = props.modalConfig.formItems.reduce(
@@ -50,7 +54,8 @@ const setModalVisible = <T extends { id: number }, F>({
   } else {
     // 新建
     Object.keys({ ...formData }).forEach(key => {
-      formData[key as keyof F] = ''
+      formData[key as keyof F] =
+        props.modalConfig.formItems.find(item => item.prop === key).initialvalue ?? ''
     })
     editId.value = -1
   }
@@ -59,25 +64,35 @@ const setModalVisible = <T extends { id: number }, F>({
 // 点击“确认”
 const systemStore = useSystemStore()
 const onConfigClick = () => {
-  showdialog.value = false
+  formRef.value?.validate(valid => {
+    if (valid) {
+      let editFormData = { ...formData }
 
-  let editFormData = { ...formData }
+      if (props.otherInfo) {
+        editFormData = { ...formData, ...props.otherInfo }
+      }
 
-  if (props.otherInfo) {
-    editFormData = { ...formData, ...props.otherInfo }
-  }
-
-  if (!isAdd.value && editId.value !== -1) {
-    // 编辑
-    systemStore.pathEditPageRecordByIdAction<EditFormDataType>(
-      pageName.value,
-      editId.value,
-      editFormData
-    )
-  } else {
-    // 新增
-    systemStore.postNewPageRecordAction<CreateFormDataType>(pageName.value, editFormData)
-  }
+      if (!isAdd.value && editId.value !== -1) {
+        // 编辑
+        systemStore
+          .pathEditPageRecordByIdAction<EditFormDataType>(
+            pageName.value,
+            editId.value,
+            editFormData
+          )
+          .then(res => {
+            if (res.code >= 0) showdialog.value = false
+          })
+      } else {
+        // 新增
+        systemStore
+          .postNewPageRecordAction<CreateFormDataType>(pageName.value, editFormData)
+          .then(res => {
+            if (res.code >= 0) showdialog.value = false
+          })
+      }
+    }
+  })
 }
 
 defineExpose({
@@ -95,11 +110,17 @@ defineExpose({
       center
     >
       <div class="form">
-        <el-form :model="formData" label-width="80px" size="large">
+        <el-form :model="formData" :rules="rules" label-width="80px" size="large" ref="formRef">
           <template v-for="item of modalConfig.formItems" :key="item">
             <!-- 插槽列 （RolePanel.vue 使用了）-->
             <template v-if="item.type === 'custom'">
-              <el-form-item>
+              <el-form-item
+                v-if="
+                  !('hidden' in item) ||
+                  (isAdd && item.hidden !== 'add') ||
+                  (!isAdd && item.hidden !== 'edit')
+                "
+              >
                 <slot :name="(item as IModalFormItemCustom).slotname"></slot>
               </el-form-item>
             </template>
@@ -107,6 +128,11 @@ defineExpose({
             <!-- 通用列 -->
             <template v-else>
               <el-form-item
+                v-if="
+                  !('hidden' in item) ||
+                  (isAdd && item.hidden !== 'add') ||
+                  (!isAdd && item.hidden !== 'edit')
+                "
                 :label="(item as IModalFormItemGeneral)!.label"
                 :prop="(item as IModalFormItemGeneral)!.prop"
               >

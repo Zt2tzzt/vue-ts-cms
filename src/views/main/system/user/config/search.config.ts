@@ -29,7 +29,11 @@ const searchConfig: ISearchConfig = {
       type: 'select',
       prop: 'enable',
       label: '状态',
-      placeholder: '请选择状态',
+      options: [
+        { value: 1, label: '启用' },
+        { value: 0, label: '禁用' }
+      ],
+      placeholder: '启用',
       initialvalue: 1
     },
     {

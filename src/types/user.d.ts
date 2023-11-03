@@ -47,3 +47,13 @@ export interface IUser extends IUserRoleAndDepartment, IUserSearchFormData {
   createAt: string
   updateAt: string
 }
+
+export interface IUserModalFormData {
+  name: string
+  realname: string
+  password: string
+  cellphone: string
+  enable: number
+  roleId: number
+  departmentId: number
+}

@@ -92,28 +92,31 @@ export interface IContentConfig {
 }
 
 // PageModal 配置文件
-export interface IModalFormItemGeneral {
+export interface IModalFormItemGeneral<T = any> {
   type: string
   label: string
   prop: keyof CreateFormDataType
   placeholder: string
   options?: Array<{ label: string; value: number }>
+  hidden?: 'none' | 'add' | 'edit'
+  initialvalue?: T[keyof T]
 }
 
 export interface IModalFormItemCustom {
   type: 'custom'
   slotname?: string
+  hidden?: 'none' | 'add' | 'edit'
 }
 
-export type IModalFormItem = IModalFormItemGeneral | IModalFormItemCustom
+export type IModalFormItem<T> = IModalFormItemGeneral<T> | IModalFormItemCustom
 
-export interface IModalConfig {
+export interface IModalConfig<T = any> {
   pageName: string
   header: {
     newBtnLabel: string
     editBtnLabel: string
   }
-  formItems: IModalFormItem[]
+  formItems: IModalFormIte<T>[]
 }
 
 // HookFnType

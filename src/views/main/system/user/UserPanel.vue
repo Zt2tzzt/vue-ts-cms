@@ -1,20 +1,34 @@
 <script setup lang="ts">
 import PageSearch from '@/components/page-search/PageSearch.vue'
 import PageContent from '@/components/page-content/PageContent.vue'
+import PageModal from '@/components/page-modal/PageModal.vue'
 import contentConfig from './config/content.config'
 import searchConfig from './config/search.config'
-import UserModal from './cpns/UserModal.vue'
+import modalConfig, { accountRules } from './config/modal.config'
 import usePageSearch from '@/hooks/usePageSearch'
 import usePageContent from '@/hooks/usePageContent'
 import type { HookFnType } from '@/types'
+import { storeToRefs } from 'pinia'
+import useMainStore from '@/stores/main/main'
+import { computed } from 'vue'
 
-// const modalRef = ref<InstanceType<typeof UserModal>>()
-/* const handleNewClick = () => {
-  modalRef.value?.setModalVisible({ isNew: true })
-}
-const handleEditClick = (itemData: IUser) => {
-  modalRef.value?.setModalVisible({ isNew: false, itemData })
-} */
+const mainStore = useMainStore()
+const { entireRoles, entireDepartments } = storeToRefs(mainStore)
+const modalConfig2 = computed(() => {
+  modalConfig.formItems.forEach(item => {
+    if ('prop' in item) {
+      switch (item.prop) {
+        case 'roleId':
+          item.options = entireRoles.value.map(ele => ({ value: ele.id, label: ele.name }))
+          break
+        case 'departmentId':
+          item.options = entireDepartments.value.map(ele => ({ value: ele.id, label: ele.name }))
+          break
+      }
+    }
+  })
+  return modalConfig
+})
 
 const [contentRef, handleQueryClick, handleResetClick] = usePageSearch()
 const [modalRef, handleNewClick, handleEditClick] = usePageContent()
@@ -41,7 +55,7 @@ const [modalRef, handleNewClick, handleEditClick] = usePageContent()
       </template>
     </PageContent>
 
-    <UserModal ref="modalRef"></UserModal>
+    <PageModal ref="modalRef" :modal-config="modalConfig2" :rules="accountRules"></PageModal>
   </div>
 </template>
 
