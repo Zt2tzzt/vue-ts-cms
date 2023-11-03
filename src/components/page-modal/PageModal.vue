@@ -9,6 +9,7 @@ import type {
   IModalFormItemCustom
 } from '@/types'
 import type { FormRules, ElForm } from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 const props = defineProps<{
   modalConfig: IModalConfig
@@ -78,14 +79,20 @@ const onConfigClick = () => {
       systemStore
         .pathEditPageRecordByIdAction<EditFormDataType>(pageName.value, editId.value, editFormData)
         .then(res => {
-          if (res.code >= 0) showdialog.value = false
+          if (res.code >= 0) {
+            showdialog.value = false
+            ElMessage({ showClose: true, message: res.msg, type: 'success' })
+          }
         })
     } else {
       // 新增
       systemStore
         .postNewPageRecordAction<CreateFormDataType>(pageName.value, editFormData)
         .then(res => {
-          if (res.code >= 0) showdialog.value = false
+          if (res.code >= 0) {
+            showdialog.value = false
+            ElMessage({ showClose: true, message: res.msg, type: 'success' })
+          }
         })
     }
   })

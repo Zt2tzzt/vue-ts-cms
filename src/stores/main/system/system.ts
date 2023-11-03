@@ -43,42 +43,6 @@ const useSystemStore = defineStore('system', {
     pageTotalCount: 0
   }),
   actions: {
-    // User
-    /* postUsersAction(queryParam: IUserQueryParam) {
-      console.log('user query param:', queryParam)
-      postUsers(queryParam).then(res => {
-        console.log('users res:', res)
-        this.users = res.data.list
-        this.usersTotalCount = res.data.totalCount
-      })
-    }, */
-    /* deleteUserByIdAction(id: number) {
-      deleteUserById(id).then(res => {
-        console.log('user detete res:', res)
-        this.postUsersAction({ offset: 0, size: 10 })
-        fetchUsersAndMenusData(USER, id)
-      })
-    }, */
-    // 新增用户
-    /* postNewUserAction(addParam: IUserCreateFormData) {
-      console.log('user addParam:', addParam)
-      return postNewUser(addParam).then(res => {
-        console.log('user add res:', res)
-        this.postUsersAction({ offset: 0, size: 10 })
-        return res
-      })
-    }, */
-    // 修改用户
-    /* pathEditUserByIdAction(id: number, editParam: IUserEditFormData) {
-      console.log('user editParam:', editParam)
-      return pathEditUserById(id, editParam).then(res => {
-        console.log('user edit res:', res)
-        this.postUsersAction({ offset: 0, size: 10 })
-        fetchUsersAndMenusData(USER, id)
-        return res
-      })
-    }, */
-
     // 通用的封装
     postPageListAction<T>(pageName: string, queryParam: T) {
       console.log(pageName, 'queryParam:', queryParam)
@@ -89,7 +53,7 @@ const useSystemStore = defineStore('system', {
       })
     },
     deletePageByIdAction(pageName: string, id: number) {
-      deletePageById(pageName, id).then(res => {
+      return deletePageById(pageName, id).then(res => {
         console.log('pageName:', pageName, 'delete res:', res)
         this.postPageListAction(pageName, { offset: 0, size: 10 })
 
@@ -98,6 +62,7 @@ const useSystemStore = defineStore('system', {
           fetchEntireData(pageName)
         }
         fetchUsersAndMenusData(pageName, id)
+        return res
       })
     },
     postNewPageRecordAction<T>(pageName: string, record: T) {

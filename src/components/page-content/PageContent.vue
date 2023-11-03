@@ -6,6 +6,7 @@ import { computed, onUnmounted, ref, reactive } from 'vue'
 import type { IDepartment } from '@/types'
 import type { IContentConfig } from '@/types'
 import usePermission from '@/hooks/usePermissions'
+import { ElMessage } from 'element-plus'
 
 const props = defineProps<{
   contentConfig: IContentConfig
@@ -74,8 +75,12 @@ const onDeleteClick = (id: number, name: string) => {
 }
 
 const onConfirmDeleteClick = () => {
-  deleteDialogVisible.value = false
-  systemStore.deletePageByIdAction(pageName.value, deleteUserInfo.id)
+  systemStore.deletePageByIdAction(pageName.value, deleteUserInfo.id).then(res => {
+    if (res.code >= 0) {
+      deleteDialogVisible.value = false
+      ElMessage({ showClose: true, message: res.msg, type: 'success' })
+    }
+  })
 }
 
 // 新增
