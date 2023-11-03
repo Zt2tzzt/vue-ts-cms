@@ -65,32 +65,28 @@ const setModalVisible = <T extends { id: number }, F>({
 const systemStore = useSystemStore()
 const onConfigClick = () => {
   formRef.value?.validate(valid => {
-    if (valid) {
-      let editFormData = { ...formData }
+    if (!valid) return
 
-      if (props.otherInfo) {
-        editFormData = { ...formData, ...props.otherInfo }
-      }
+    let editFormData = { ...formData }
 
-      if (!isAdd.value && editId.value !== -1) {
-        // 编辑
-        systemStore
-          .pathEditPageRecordByIdAction<EditFormDataType>(
-            pageName.value,
-            editId.value,
-            editFormData
-          )
-          .then(res => {
-            if (res.code >= 0) showdialog.value = false
-          })
-      } else {
-        // 新增
-        systemStore
-          .postNewPageRecordAction<CreateFormDataType>(pageName.value, editFormData)
-          .then(res => {
-            if (res.code >= 0) showdialog.value = false
-          })
-      }
+    if (props.otherInfo) {
+      editFormData = { ...formData, ...props.otherInfo }
+    }
+
+    if (!isAdd.value && editId.value !== -1) {
+      // 编辑
+      systemStore
+        .pathEditPageRecordByIdAction<EditFormDataType>(pageName.value, editId.value, editFormData)
+        .then(res => {
+          if (res.code >= 0) showdialog.value = false
+        })
+    } else {
+      // 新增
+      systemStore
+        .postNewPageRecordAction<CreateFormDataType>(pageName.value, editFormData)
+        .then(res => {
+          if (res.code >= 0) showdialog.value = false
+        })
     }
   })
 }

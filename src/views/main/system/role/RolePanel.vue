@@ -10,7 +10,7 @@ import useMainStore from '@/stores/main/main'
 import { storeToRefs } from 'pinia'
 import { nextTick, ref } from 'vue'
 import PageModal from '@/components/page-modal/PageModal.vue'
-import modalConfig from './config/modal.config'
+import modalConfig, { roleRules } from './config/modal.config'
 import type { ElTree } from 'element-plus'
 import { mapMenusToIds } from '@/utils/map-menu'
 
@@ -51,7 +51,12 @@ const [modalRef, handleNewClick, handleEditClick] = usePageContent(editCallback)
       @new-click="handleNewClick as HookFnType"
       @edit-click="handleEditClick as HookFnType"
     ></PageContent>
-    <PageModal ref="modalRef" :modal-config="modalConfig" :other-info="otherInfo">
+    <PageModal
+      ref="modalRef"
+      :modal-config="modalConfig"
+      :other-info="otherInfo"
+      :rules="roleRules"
+    >
       <template #menulist>
         <el-tree
           ref="treeRef"
