@@ -14,7 +14,7 @@ import { computed } from 'vue'
 
 const mainStore = useMainStore()
 const { entireRoles, entireDepartments } = storeToRefs(mainStore)
-const modalConfig2 = computed(() => {
+const modalConfigRef = computed(() => {
   modalConfig.formItems.forEach(item => {
     if ('prop' in item) {
       switch (item.prop) {
@@ -55,7 +55,7 @@ const [modalRef, handleNewClick, handleEditClick] = usePageContent()
       </template>
     </PageContent>
 
-    <PageModal ref="modalRef" :modal-config="modalConfig2" :rules="accountRules"></PageModal>
+    <PageModal ref="modalRef" :modal-config="modalConfigRef" :rules="accountRules"></PageModal>
   </div>
 </template>
 

@@ -32,6 +32,9 @@ const modalConfigRef = computed(() => {
 
 const [contentRef, handleQueryClick, handleResetClick] = usePageSearch()
 const [modalRef, handleNewClick, handleEditClick] = usePageContent()
+
+const formatParentId2ParentName = (parentId: number) =>
+  mainStore.entireDepartments.find(item => item.id === parentId)?.name
 </script>
 
 <template>
@@ -46,7 +49,11 @@ const [modalRef, handleNewClick, handleEditClick] = usePageContent()
       :content-config="contentConfig"
       @new-click="handleNewClick as HookFnType"
       @edit-click="handleEditClick as HookFnType"
-    ></PageContent>
+    >
+      <template #parentDepartment="props">
+        {{ formatParentId2ParentName(props.row.parentId) }}
+      </template>
+    </PageContent>
     <PageModal :modal-config="modalConfigRef" ref="modalRef"></PageModal>
   </div>
 </template>
