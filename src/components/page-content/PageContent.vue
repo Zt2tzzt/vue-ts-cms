@@ -76,7 +76,7 @@ const onDeleteClick = (id: number, name: string) => {
 
 const onConfirmDeleteClick = () => {
   systemStore.deletePageByIdAction(pageName.value, deleteUserInfo.id).then(res => {
-    if (res.code >= 0) {
+    if (res && res.code >= 0) {
       deleteDialogVisible.value = false
       ElMessage({ showClose: true, message: res.msg, type: 'success' })
     }

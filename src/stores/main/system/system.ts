@@ -55,6 +55,9 @@ const useSystemStore = defineStore('system', {
     deletePageByIdAction(pageName: string, id: number) {
       return deletePageById(pageName, id).then(res => {
         console.log('pageName:', pageName, 'delete res:', res)
+
+        if (res.code < 0) return
+
         this.postPageListAction(pageName, { offset: 0, size: 10 })
 
         // 如果是部门，角色，菜单等基础数据发生增、删、改操作，要重新加载到缓存中。
@@ -68,6 +71,9 @@ const useSystemStore = defineStore('system', {
     postNewPageRecordAction<T>(pageName: string, record: T) {
       return postNewPageRecord(pageName, record).then(res => {
         console.log('pageName:', pageName, 'add res:', res)
+
+        if (res.code < 0) return
+
         this.postPageListAction(pageName, { offset: 0, size: 10 })
 
         // 如果是部门，角色，菜单等基础数据发生增、删、改操作，要重新加载到缓存中。
@@ -80,6 +86,9 @@ const useSystemStore = defineStore('system', {
     pathEditPageRecordByIdAction<T>(pageName: string, id: number, record: T) {
       return pathEditPageRecordById(pageName, id, record).then(res => {
         console.log('pageName:', pageName, 'edit res:', res)
+
+        if (res.code < 0) return
+
         this.postPageListAction(pageName, { offset: 0, size: 10 })
 
         // 如果是部门，角色，菜单等基础数据发生增、删、改操作，要重新加载到缓存中。

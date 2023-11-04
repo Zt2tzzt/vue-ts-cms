@@ -79,7 +79,7 @@ const onConfigClick = () => {
       systemStore
         .pathEditPageRecordByIdAction<EditFormDataType>(pageName.value, editId.value, editFormData)
         .then(res => {
-          if (res.code >= 0) {
+          if (res && res.code >= 0) {
             showdialog.value = false
             ElMessage({ showClose: true, message: res.msg, type: 'success' })
           }
@@ -89,7 +89,7 @@ const onConfigClick = () => {
       systemStore
         .postNewPageRecordAction<CreateFormDataType>(pageName.value, editFormData)
         .then(res => {
-          if (res.code >= 0) {
+          if (res && res.code >= 0) {
             showdialog.value = false
             ElMessage({ showClose: true, message: res.msg, type: 'success' })
           }
