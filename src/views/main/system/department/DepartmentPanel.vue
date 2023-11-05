@@ -5,7 +5,7 @@ import PageSearch from '@/components/page-search/PageSearch.vue'
 import { computed } from 'vue'
 import searchConfig from './config/search.config'
 import contentConfig from './config/content.config'
-import modalConfig from './config/modal.config'
+import modalConfig, { deparmentRules } from './config/modal.config'
 import useMainStore from '@/stores/main/main'
 import usePageSearch from '@/hooks/usePageSearch'
 import usePageContent from '@/hooks/usePageContent'
@@ -54,7 +54,7 @@ const formatParentId2ParentName = (parentId: number) =>
         {{ formatParentId2ParentName(props.row.parentId) }}
       </template>
     </PageContent>
-    <PageModal :modal-config="modalConfigRef" ref="modalRef"></PageModal>
+    <PageModal :modal-config="modalConfigRef" ref="modalRef" :rules="deparmentRules"></PageModal>
   </div>
 </template>
 

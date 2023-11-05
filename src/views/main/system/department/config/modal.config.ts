@@ -1,5 +1,6 @@
 import { DEPARTMENT } from '@/global/constance'
 import type { IModalConfig } from '@/types'
+import type { FormRules } from 'element-plus'
 
 const modalConfig: IModalConfig = {
   pageName: DEPARTMENT,
@@ -18,6 +19,11 @@ const modalConfig: IModalConfig = {
       options: []
     }
   ]
+}
+
+// 校验规则
+export const deparmentRules: FormRules = {
+  name: [{ required: true, message: '必须输入部门名称~', trigger: 'blur' }]
 }
 
 export default modalConfig
