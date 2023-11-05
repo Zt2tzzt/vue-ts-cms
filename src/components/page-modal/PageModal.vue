@@ -10,12 +10,16 @@ import type {
 } from '@/types'
 import type { FormRules, ElForm } from 'element-plus'
 import { ElMessage } from 'element-plus'
+import { watch } from 'vue'
 
 const props = defineProps<{
   modalConfig: IModalConfig
   otherInfo?: object
   rules?: FormRules
 }>()
+
+const emits = defineEmits(['modalHidde'])
+
 const pageName = computed(() => props.modalConfig.pageName)
 
 const showdialog = ref(false)
@@ -97,6 +101,10 @@ const onConfigClick = () => {
     }
   })
 }
+
+watch(showdialog, newVal => {
+  if (!newVal) emits('modalHidde')
+})
 
 defineExpose({
   setModalVisible
