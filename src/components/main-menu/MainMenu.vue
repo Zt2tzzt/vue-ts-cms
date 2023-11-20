@@ -43,7 +43,7 @@ onMounted(() => {
     <!-- logo -->
     <div class="logo">
       <img src="@/assets/img/logo.svg" alt="" />
-      <h2 class="title" v-show="!isFold">LTP-BI</h2>
+      <h2 class="title" v-show="!isFold">VUE-TS-CMS</h2>
     </div>
 
     <!-- menu -->

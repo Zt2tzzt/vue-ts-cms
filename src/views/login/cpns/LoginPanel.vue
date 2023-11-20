@@ -27,7 +27,7 @@ const onLoginBtnClick = () => {
 
 <template>
   <div class="login-panel">
-    <h1 class="title">LTP-BI</h1>
+    <h1 class="title">VUE-TS-CMS</h1>
 
     <!-- tabs 区域，在帐号和手机登录之间切换。 -->
     <div class="tabs">

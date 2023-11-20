@@ -18,7 +18,7 @@ const props = defineProps<{
   rules?: FormRules
 }>()
 
-const emits = defineEmits(['modalHidde'])
+const emits = defineEmits(['modalHidde', 'selectChange'])
 
 const pageName = computed(() => props.modalConfig.pageName)
 
@@ -106,6 +106,10 @@ watch(showdialog, newVal => {
   if (!newVal) emits('modalHidde')
 })
 
+const onSelectChange = (prop: string, value: any) => {
+  emits('selectChange', prop, value)
+}
+
 defineExpose({
   setModalVisible
 })
@@ -152,6 +156,7 @@ defineExpose({
                   <el-input
                     v-model="formData[item.prop]"
                     :placeholder="item.placeholder"
+                    :disabled="item.disabled"
                   ></el-input>
                 </template>
 
@@ -161,6 +166,8 @@ defineExpose({
                     v-model="formData[item.prop]"
                     :placeholder="item.placeholder"
                     style="width: 100%"
+                    @change="(value: any) => onSelectChange(item.prop, value)"
+                    :disabled="item.disabled"
                   >
                     <template v-for="option of item.options" :key="option.value">
                       <el-option :label="option.label" :value="option.value"></el-option>

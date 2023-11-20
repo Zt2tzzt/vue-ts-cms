@@ -1,5 +1,6 @@
 import type { IModalConfig } from '@/types'
 import { MENU } from '@/global/constance'
+import type { FormRules } from 'element-plus'
 
 const modalConfig: IModalConfig = {
   pageName: MENU,
@@ -32,6 +33,12 @@ const modalConfig: IModalConfig = {
     { type: 'input', label: '菜单权限', prop: 'permission', placeholder: '请输入菜单权限' },
     { type: 'input', label: '优先级', prop: 'sort', placeholder: '请输入菜单优先级' }
   ]
+}
+
+// 校验规则
+export const menuRules: FormRules = {
+  name: [{ required: true, message: '必须输入菜单名称~', trigger: 'blur' }],
+  type: [{ required: true, message: '必须选择菜单级别~', trigger: 'blur' }]
 }
 
 export default modalConfig

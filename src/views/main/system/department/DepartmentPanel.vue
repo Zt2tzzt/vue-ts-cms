@@ -49,10 +49,6 @@ const [modalRef, handleNewClick, handleEditClick] = usePageContent(editCallback,
 
 const formatParentId2ParentName = (parentId: number) =>
   mainStore.entireDepartments.find(item => item.id === parentId)?.name
-
-const handleModalHidde = () => {
-  modalConfigRef.value = modalConfig
-}
 </script>
 
 <template>
@@ -72,12 +68,7 @@ const handleModalHidde = () => {
         {{ formatParentId2ParentName(props.row.parentId) }}
       </template>
     </PageContent>
-    <PageModal
-      :modal-config="modalConfigRef"
-      ref="modalRef"
-      :rules="deparmentRules"
-      @modal-hidde="handleModalHidde"
-    ></PageModal>
+    <PageModal :modal-config="modalConfigRef" ref="modalRef" :rules="deparmentRules"></PageModal>
   </div>
 </template>
 
