@@ -111,7 +111,8 @@ const onSelectChange = (prop: string, value: any) => {
 }
 
 defineExpose({
-  setModalVisible
+  setModalVisible,
+  formData
 })
 </script>
 
