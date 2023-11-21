@@ -95,8 +95,6 @@ const handleSelectChange = (prop: string, value: any) => {
           break
       }
       break
-    default:
-      break
   }
 }
 </script>
