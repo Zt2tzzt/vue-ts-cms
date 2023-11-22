@@ -38,7 +38,8 @@ const modalConfig: IModalConfig = {
 // 校验规则
 export const menuRules: FormRules = {
   name: [{ required: true, message: '必须填写菜单名称~', trigger: 'blur' }],
-  type: [{ required: true, message: '必须填写菜单级别~', trigger: 'blur' }]
+  type: [{ required: true, message: '必须填写菜单级别~', trigger: 'blur' }],
+  sort: [{ required: true, message: '必须填写优先级~', trigger: 'blur' }]
 }
 
 export default modalConfig
