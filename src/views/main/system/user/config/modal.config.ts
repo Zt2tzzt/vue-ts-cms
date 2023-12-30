@@ -46,16 +46,16 @@ export const accountRules: FormRules = {
   name: [
     { required: true, message: '必须输入帐号信息~', trigger: 'blur' },
     {
-      pattern: /^[a-z0-9]{3,50}$/,
-      message: '必须是3~50位数字或字母组成~',
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      message: '必须是一个邮箱~',
       trigger: 'blur'
     }
   ],
   password: [
     { required: true, message: '必须输入密码信息~', trigger: 'blur' },
     {
-      pattern: /^[a-z0-9]{3,50}$/,
-      message: '必须是3-50位数字或字母组成',
+      pattern: /^.{8,20}$/,
+      message: '长度在8-20之间',
       trigger: 'blur'
     }
   ]
