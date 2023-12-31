@@ -1,11 +1,11 @@
 import { localCache } from '@/utils/cache'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { LOGIN_TOKEN } from '@/global/constance'
 import { firstRoute } from '@/utils/map-menu'
 // import useMainStore from '@/stores/main/main'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
