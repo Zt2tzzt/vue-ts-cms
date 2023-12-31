@@ -15,7 +15,8 @@ const usePageContent = (editCallback?: EditCallbackType, newCallback?: NewCallba
 
   const handleEditClick = (itemData: ItemType) => {
     modalRef.value?.setModalVisible<ItemType, EditFormDataType>({ isNew: false, itemData })
-    if (editCallback && ('menuList' in itemData || 'parentId' in itemData)) editCallback(itemData) // 用于处理 role 的 menuList
+    if (editCallback && ('menuList' in itemData || 'parentId' in itemData || 'type' in itemData))
+      editCallback(itemData) // 用于处理 role 中的 menuList；department 中的 parentId；menu 中的 type
   }
 
   return [modalRef, handleNewClick, handleEditClick]

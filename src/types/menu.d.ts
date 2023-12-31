@@ -13,6 +13,7 @@ export interface IMenuChild extends IMenuInRoleChild {
 }
 
 export interface IMenu extends IMenuInRole {
+  type: 1 | 2 | 3
   createAt: string
   updateAt: string
   children: Array<IMenuChild>

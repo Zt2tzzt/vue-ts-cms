@@ -19,7 +19,8 @@ const modalConfig: IModalConfig = {
         { value: 1, label: '1级' },
         { value: 2, label: '2级' },
         { value: 3, label: '3级' }
-      ]
+      ],
+      disabled: true
     },
     { type: 'input', label: '菜单图标', prop: 'icon', placeholder: '请输入菜单图标' },
     {
@@ -27,7 +28,8 @@ const modalConfig: IModalConfig = {
       label: '父级菜单',
       prop: 'parentId',
       placeholder: '请选择父级菜单',
-      options: []
+      options: [],
+      disabled: true
     },
     { type: 'input', label: '菜单路径', prop: 'url', placeholder: '请输入菜单路径' },
     { type: 'input', label: '菜单权限', prop: 'permission', placeholder: '请输入菜单权限' },

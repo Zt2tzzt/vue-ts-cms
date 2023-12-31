@@ -11,14 +11,13 @@ import { ref } from 'vue'
 import { deepCopy } from '@/utils/deepCopy'
 import type { FormRules } from 'element-plus'
 import type { IModalConfig } from '@/types'
+import type { IMenu } from '@/types'
 
 const mainStore = useMainStore()
 const { entireMenus } = storeToRefs(mainStore)
 
 const modalConfigRef = ref(deepCopy(modalConfig) as IModalConfig)
 const menuRulesRef = ref(deepCopy(menuRules) as FormRules)
-
-const [modalRef, handleNewClick, handleEditClick] = usePageContent()
 
 console.log('modalConfig0:', modalConfig)
 console.log('menuRules0:', menuRules)
@@ -28,75 +27,47 @@ const restoreConfig = () => {
   modalConfigRef.value = deepCopy(modalConfig)
 }
 
-const handleSelectChange = (prop: string, value: any) => {
-  console.log('select prop:', prop, 'select value:', value)
-  switch (prop) {
-    // 菜单级别发生改变
-    case 'type':
-      console.log('entireMenus:', entireMenus.value)
-      switch (value) {
-        // 菜单级别变为 1 级
-        case 1:
-          restoreConfig()
-          menuRulesRef.value.icon = [
-            { required: true, message: '必须填写菜单图标~', trigger: 'blur' }
-          ]
-          menuRulesRef.value.url = [
-            { required: true, message: '必须填写菜单路径~', trigger: 'blur' }
-          ]
-          ;(modalRef as any).value.formData.parentId = ''
-          ;(modalRef as any).value.formData.permission = ''
-          modalConfigRef.value.formItems.find(item => item.prop === 'parentId').disabled = true
-          modalConfigRef.value.formItems.find(item => item.prop === 'permission').disabled = true
-          break
+const chageMenuRules = (itemData: IMenu) => {
+  console.log('entireMenus:', entireMenus.value)
+  console.log('itemData.type:', itemData.type)
+  // 菜单级别变为 1 级
+  switch (itemData.type) {
+    case 1:
+      restoreConfig()
+      menuRulesRef.value.icon = [{ required: true, message: '必须填写菜单图标~', trigger: 'blur' }]
+      menuRulesRef.value.url = [{ required: true, message: '必须填写菜单路径~', trigger: 'blur' }]
 
-        // 菜单级别变为 2 级
-        case 2:
-          restoreConfig()
-          menuRulesRef.value.parentId = [
-            { required: true, message: '必须填写父级菜单~', trigger: 'blur' }
-          ]
-          menuRulesRef.value.url = [
-            { required: true, message: '必须填写菜单路径~', trigger: 'blur' }
-          ]
-          ;(modalRef as any).value.formData.icon = ''
-          ;(modalRef as any).value.formData.permission = ''
-          ;(modalRef as any).value.formData.parentId = ''
-          modalConfigRef.value.formItems.find(item => item.prop === 'icon').disabled = true
-          modalConfigRef.value.formItems.find(item => item.prop === 'permission').disabled = true
-          // 获取 1 级菜单
-          modalConfigRef.value.formItems.find(item => item.prop === 'parentId').options = [
-            ...entireMenus.value
-          ].map(item => ({ value: item.id, label: item.name }))
-          break
-        case 3:
-          restoreConfig()
-          menuRulesRef.value.parentId = [
-            { required: true, message: '必须填写父级菜单~', trigger: 'blur' }
-          ]
-          menuRulesRef.value.permission = [
-            { required: true, message: '必须填写菜单权限~', trigger: 'blur' }
-          ]
-          ;(modalRef as any).value.formData.icon = ''
-          ;(modalRef as any).value.formData.url = ''
-          ;(modalRef as any).value.formData.parentId = ''
-          modalConfigRef.value.formItems.find(item => item.prop === 'icon').disabled = true
-          modalConfigRef.value.formItems.find(item => item.prop === 'url').disabled = true
-          // 获取 2 级菜单
-          modalConfigRef.value.formItems.find(item => item.prop === 'parentId').options = [
-            ...entireMenus.value
-          ].reduce(
-            (accumulate, currItem) =>
-              (accumulate as any).concat(
-                currItem.children?.map(item => ({ value: item.id, label: item.name })) || []
-              ),
-            []
-          )
-          break
-      }
+      modalConfigRef.value.formItems.find(item => item.prop === 'permission').disabled = true
+      break
+
+    // 菜单级别变为 2 级
+    case 2:
+      restoreConfig()
+      menuRulesRef.value.parentId = [
+        { required: true, message: '必须填写父级菜单~', trigger: 'blur' }
+      ]
+      menuRulesRef.value.url = [{ required: true, message: '必须填写菜单路径~', trigger: 'blur' }]
+
+      modalConfigRef.value.formItems.find(item => item.prop === 'icon').disabled = true
+      modalConfigRef.value.formItems.find(item => item.prop === 'permission').disabled = true
+      break
+    // 菜单级别变为 2 级
+    case 3:
+      restoreConfig()
+      menuRulesRef.value.parentId = [
+        { required: true, message: '必须填写父级菜单~', trigger: 'blur' }
+      ]
+      menuRulesRef.value.permission = [
+        { required: true, message: '必须填写菜单权限~', trigger: 'blur' }
+      ]
+
+      modalConfigRef.value.formItems.find(item => item.prop === 'icon').disabled = true
+      modalConfigRef.value.formItems.find(item => item.prop === 'url').disabled = true
       break
   }
 }
+
+const [modalRef, handleNewClick, handleEditClick] = usePageContent(chageMenuRules)
 </script>
 
 <template>
@@ -110,7 +81,6 @@ const handleSelectChange = (prop: string, value: any) => {
       ref="modalRef"
       :modal-config="modalConfigRef"
       :rules="menuRulesRef"
-      @selectChange="handleSelectChange"
       @modalHidde="restoreConfig"
     ></PageModal>
   </div>

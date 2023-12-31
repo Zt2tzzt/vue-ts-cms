@@ -18,6 +18,7 @@ import type {
   IUserCreateFormData,
   IUserEditFormData
 } from './user'
+import { IMenu } from './menu'
 
 // 查询
 export interface ISearchParam {
@@ -37,7 +38,7 @@ export interface IResponse<T = any> {
 }
 
 // itemType, CreateFormDataType, EditFormDataType
-export type ItemType = IUser | IDepartment | IRole
+export type ItemType = IUser | IDepartment | IRole | IMenu
 export type CreateFormDataType = IUserCreateFormData &
   IDepartmentCreateFormData &
   IRoleCreateFormData
