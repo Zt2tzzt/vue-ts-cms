@@ -50,7 +50,7 @@ const handleSelectChange = (prop: string, value: any) => {
           modalConfigRef.value.formItems.find(item => item.prop === 'permission').disabled = true
           break
 
-        // 菜单级别变为 1 级
+        // 菜单级别变为 2 级
         case 2:
           restoreConfig()
           menuRulesRef.value.parentId = [

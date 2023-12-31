@@ -29,14 +29,15 @@ const editId = ref(-1)
 const formRef = ref<InstanceType<typeof ElForm>>()
 
 // 表单属性
-const initialFormData = props.modalConfig.formItems.reduce(
-  (accumulate, item) => {
-    if ('prop' in item) accumulate[item.prop] = ''
-    return accumulate
-  },
-  {} as CreateFormDataType | EditFormDataType
+const formData = reactive(
+  props.modalConfig.formItems.reduce(
+    (accumulate, item) => {
+      if ('prop' in item) accumulate[item.prop] = ''
+      return accumulate
+    },
+    {} as CreateFormDataType | EditFormDataType
+  )
 )
-const formData = reactive(initialFormData)
 
 // 设置 dialog 是否显示，并初始化数据。
 const setModalVisible = <T extends { id: number }, F>({
@@ -108,6 +109,13 @@ watch(showdialog, newVal => {
 
 const onSelectChange = (prop: string, value: any) => {
   emits('selectChange', prop, value)
+}
+
+const onCancelClick = () => {
+  showdialog.value = false
+  Object.keys({ ...formData }).forEach(key => {
+    formData[key] = ''
+  })
 }
 
 defineExpose({
@@ -183,7 +191,7 @@ defineExpose({
 
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="showdialog = false"> 取消 </el-button>
+          <el-button @click="onCancelClick"> 取消 </el-button>
           <el-button type="primary" @click="onConfigClick"> 确定 </el-button>
         </span>
       </template>
